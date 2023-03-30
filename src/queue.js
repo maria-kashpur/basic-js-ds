@@ -1,6 +1,6 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-// const { ListNode } = require('../extensions/list-node.js');
+const { ListNode } = require('../extensions/list-node.js');
 
 /**
  * Implement the Queue with a given interface via linked list (use ListNode extension above).
@@ -15,19 +15,43 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 class Queue {
 
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor() {
+    // ссылка на первый элемент в очереди
+    this.head = null;
+    // ссылка на последний элемент в очереди
+    this.tail = null;
+    // количество элементов в очереди
+    this.length = 0
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  getUnderlyingList() {
+    // возвращаем всю очередь. Если бы надо было вернуть первый элемент - this.head.value
+    return this.head;
+  }
+
+  enqueue(value) {
+    if (this.length === 0) {
+    // если очередь пустая, то создаем элемент с помощью класса ListNode, он же является первым и последним элементом очереди
+      this.tail = new ListNode(value);
+      this.head = this.tail
+    } else {
+    // вставляем созданный узел в конец череди
+      this.tail.next = new ListNode(value);
+    // обновляем значение this.tail. теперь оно равно только что добавленому элементу
+      this.tail = this.tail.next;
+    }
+    this.length ++
   }
 
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    // создаем переменную, хранящую ссылку на первый элемент очереди, его и будем удалять
+    let current = this.head;
+    // обновляем  значение this.head. теперь оно равно второму элементу, потому что первый удален
+    this.head = this.head.next;
+    this.length --
+
+    // возвращаем удаленный элемент
+    return current.value
   }
 }
 
